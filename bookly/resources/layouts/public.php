@@ -2,23 +2,22 @@
 $__use_data = $__data;
 $__view = isset($__data['_view']) ? str_replace('.', '/', $__data['_view']) : '';
 ?><!DOCTYPE html>
-<html lang="<?= e(\Bookly\Support\Language::current()) ?>" dir="<?= e(\Bookly\Support\Language::dir()) ?>" class="bg-[#F5F5F7]">
+<html lang="<?= e(\Bookly\Support\Language::current()) ?>" dir="<?= e(\Bookly\Support\Language::dir()) ?>">
 <head>
 <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, viewport-fit=cover">
+<meta name="theme-color" content="#0071E3">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+<meta name="format-detection" content="telephone=no">
 <title><?= e($__data['title'] ?? 'Bookly') ?></title>
-<script src="https://cdn.tailwindcss.com"></script>
-<script defer src="https://unpkg.com/alpinejs@3.x.x/dist/cdn.min.js"></script>
 <style>
-body { font-family: 'Inter', system-ui, -apple-system, 'SF Pro Display', sans-serif; -webkit-font-smoothing: antialiased; color: #1D1D1F; }
+html, body { margin: 0; padding: 0; background: #F5F5F7; }
+body { font-family: -apple-system, BlinkMacSystemFont, 'Inter', 'SF Pro Display', system-ui, sans-serif; -webkit-font-smoothing: antialiased; color: #1D1D1F; -webkit-text-size-adjust: 100%; overscroll-behavior-y: contain; }
 .apple-card { background: #fff; border-radius: 24px; box-shadow: 0 4px 24px rgba(0,0,0,0.06); }
-.btn-primary { background: #0071E3; color: #fff; padding: 12px 24px; border-radius: 12px; font-weight: 500; transition: all .25s; cursor: pointer; border: none; display: inline-flex; align-items: center; gap: .5rem; justify-content: center; text-decoration: none; }
-.btn-primary:hover { background: #0066CC; }
-.input { width: 100%; padding: 12px 16px; border-radius: 12px; border: 1px solid #E5E5EA; }
-.input:focus { outline: none; border-color: #0071E3; box-shadow: 0 0 0 3px rgba(0,113,227,0.15); }
-.label { display:block; font-size:.8125rem; font-weight:500; margin-bottom:.375rem; }
 </style>
 </head>
-<body class="min-h-screen">
+<body>
 <?php
 $__viewFile = BOOKLY_ROOT.'/resources/views/'.$__view.'.php';
 if (is_file($__viewFile)) { extract($__use_data, EXTR_SKIP); require $__viewFile; }

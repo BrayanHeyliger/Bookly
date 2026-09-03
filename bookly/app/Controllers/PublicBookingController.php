@@ -68,12 +68,12 @@ class PublicBookingController
             redirect('/book/'.$slug.'/thanks/'.$bookingId);
         }
         $services = $db->all('SELECT * FROM services WHERE business_id = ? AND is_active = 1 ORDER BY position', [$b['id']]);
-        layout('public', ['_view' => 'bookings.public.show', 'business' => $b, 'services' => $services]);
+        layout('public', ['_view' => 'bookings.public.show', 'title' => 'Book · '.$b['name'], 'business' => $b, 'services' => $services]);
     }
 
     public static function thanks(DB $db, int $bookingId): void
     {
         $booking = $db->first('SELECT b.*, s.name AS service_name FROM bookings b LEFT JOIN services s ON s.id = b.service_id WHERE b.id = ?', [$bookingId]);
-        layout('public', ['_view' => 'bookings.public.thanks', 'booking' => $booking]);
+        layout('public', ['_view' => 'bookings.public.thanks', 'title' => 'Booking confirmed', 'booking' => $booking]);
     }
 }
