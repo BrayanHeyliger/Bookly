@@ -60,6 +60,20 @@
   </div>
 </section>
 
+<section class="section">
+  <div class="max-w-6xl mx-auto">
+    <div class="text-center mb-10">
+      <div class="pill bg-[#E8F3FF] text-[#0071E3] mb-3"><span>📍</span> Cities</div>
+      <h2 class="text-3xl md:text-4xl font-semibold">Browse by city</h2>
+    </div>
+    <div class="flex flex-wrap gap-2">
+      <?php foreach ($cities as $c): ?>
+        <a href="/city/<?= urlencode(str_replace(' ', '-', strtolower($c['city']))) ?>" class="px-4 py-2 rounded-full bg-white border border-black/5 text-sm font-medium hover:border-[#0071E3] hover:text-[#0071E3] transition"><?= e($c['city']) ?></a>
+      <?php endforeach; ?>
+    </div>
+  </div>
+</section>
+
 <section class="section bg-[#F5F5F7]">
   <div class="max-w-6xl mx-auto">
     <div class="text-center mb-10">

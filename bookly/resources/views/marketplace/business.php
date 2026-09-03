@@ -6,6 +6,10 @@
 .svc-card:hover { box-shadow:0 4px 16px rgba(0,0,0,0.08); }
 .review-card { background:#fff; border-radius:16px; padding:20px; border:1px solid rgba(0,0,0,0.06); }
 .star { color:#FF9500; }
+.gallery-grid { display:grid; grid-template-columns: repeat(3, 1fr); gap:6px; }
+.gallery-grid .span-2 { grid-column: span 2; }
+.gallery-grid .span-2 { grid-column: span 2; }
+.map-placeholder { background:#F5F5F7; border-radius:16px; height:200px; display:flex; align-items:center; justify-content:center; color:#8E8E93; font-size:14px; border:1px dashed #D1D1D6; }
 </style>
 
 <div class="biz-hero">
@@ -26,6 +30,13 @@
   <div class="apple-card p-6 mb-6">
     <div class="text-sm text-black/50 uppercase tracking-wide mb-2">About</div>
     <p class="text-base text-black/80 leading-relaxed"><?= e($business['description']) ?></p>
+  </div>
+  <?php endif; ?>
+
+  <?php if (!empty($business['address'])): ?>
+  <div class="apple-card p-6 mb-6">
+    <div class="text-sm text-black/50 uppercase tracking-wide mb-2">Location</div>
+    <div class="map-placeholder">📍 <?= e($business['address']) ?></div>
   </div>
   <?php endif; ?>
 

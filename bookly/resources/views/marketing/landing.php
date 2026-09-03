@@ -52,6 +52,7 @@ body { font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'SF Pro Display'
 <a href="#features" class="hover:text-[#0071E3] transition"><?= t('nav.features') ?></a>
 <a href="#addons" class="hover:text-[#0071E3] transition"><?= t('nav.addons') ?></a>
 <a href="#pricing" class="hover:text-[#0071E3] transition"><?= t('nav.pricing') ?></a>
+<a href="/blog" class="hover:text-[#0071E3] transition">Blog</a>
 <a href="/book/studio-demo" class="hover:text-[#0071E3] transition"><?= t('nav.demo') ?></a>
 </div>
 <div class="flex items-center gap-2">
@@ -546,6 +547,7 @@ foreach ($addons as $a): ?>
 <li><a href="#features" class="hover:text-[#0071E3]"><?= t('nav.features') ?></a></li>
 <li><a href="#addons" class="hover:text-[#0071E3]"><?= t('nav.addons') ?></a></li>
 <li><a href="#pricing" class="hover:text-[#0071E3]"><?= t('nav.pricing') ?></a></li>
+<li><a href="/blog" class="hover:text-[#0071E3]">Blog</a></li>
 </ul>
 </div>
 <div>

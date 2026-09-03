@@ -29,12 +29,26 @@
         <tr><td colspan="5" class="p-6 text-center text-black/40">No listings yet.</td></tr>
       <?php else: foreach ($listings as $l): ?>
         <tr class="hover:bg-black/[0.02] transition">
-          <td class="p-3 font-medium"><?= e($l['name']) ?></td>
+          <td class="p-3 font-medium">
+            <a href="/business/<?= e($l['slug']) ?>" class="text-[#0071E3] hover:underline" target="_blank"><?= e($l['name']) ?></a>
+          </td>
           <td class="p-3"><?= e($l['category'] ?? '—') ?></td>
           <td class="p-3"><?= e($l['city'] ?? '—') ?></td>
           <td class="p-3">
-            <span class="pill text-[10px] <?= $l['is_active'] ? 'bg-[#E8F8EE] text-[#34C759]' : 'bg-black/5 text-black/40' ?>"><?= $l['is_active'] ? 'Active' : 'Inactive' ?></span>
-            <?= $l['is_featured'] ? '<span class="pill text-[10px] bg-[#E8F3FF] text-[#0071E3] ml-1">Featured</span>' : '' ?>
+            <form method="POST" action="/admin/listings" class="inline" onsubmit="return confirm('Toggle active?')">
+              <?= csrf_field() ?>
+              <input type="hidden" name="action" value="update">
+              <input type="hidden" name="id" value="<?= (int)$l['id'] ?>">
+              <input type="hidden" name="is_active" value="<?= $l['is_active'] ? '0' : '1' ?>">
+              <button class="pill text-[10px] <?= $l['is_active'] ? 'bg-[#E8F8EE] text-[#34C759]' : 'bg-black/5 text-black/40' ?>"><?= $l['is_active'] ? 'Active' : 'Inactive' ?></button>
+            </form>
+            <form method="POST" action="/admin/listings" class="inline" onsubmit="return confirm('Toggle featured?')">
+              <?= csrf_field() ?>
+              <input type="hidden" name="action" value="update">
+              <input type="hidden" name="id" value="<?= (int)$l['id'] ?>">
+              <input type="hidden" name="is_featured" value="<?= $l['is_featured'] ? '0' : '1' ?>">
+              <button class="pill text-[10px] <?= $l['is_featured'] ? 'bg-[#E8F3FF] text-[#0071E3]' : 'bg-black/5 text-black/30' ?>"><?= $l['is_featured'] ? 'Featured' : 'Standard' ?></button>
+            </form>
           </td>
           <td class="p-3 text-right">
             <form method="POST" action="/admin/listings" class="inline" onsubmit="return confirm('Remove this listing?')">

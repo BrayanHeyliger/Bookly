@@ -28,8 +28,29 @@ class MarketplaceController
             self::search($db);
             return;
         }
+        if ($uri === '/blog') {
+            self::blog($db);
+            return;
+        }
+        if (preg_match('#^/blog/([a-z0-9-]+)$#', $uri, $m)) {
+            self::blogPost($db, $m[1]);
+            return;
+        }
         http_response_code(404);
         echo 'Page not found';
+    }
+
+    public static function blog(DB $db): void
+    {
+        $posts = $db->all('SELECT * FROM blog_posts WHERE is_published = 1 ORDER BY created_at DESC LIMIT 20');
+        layout('public', ['_view' => 'marketplace.blog', 'title' => 'Blog — Bookly', 'posts' => $posts]);
+    }
+
+    public static function blogPost(DB $db, string $slug): void
+    {
+        $post = $db->first('SELECT * FROM blog_posts WHERE slug = ? AND is_published = 1', [$slug]);
+        if (! $post) { http_response_code(404); echo 'Article not found'; return; }
+        layout('public', ['_view' => 'marketplace.blog-post', 'title' => $post['title'].' — Bookly', 'post' => $post]);
     }
 
     public static function explore(DB $db): void

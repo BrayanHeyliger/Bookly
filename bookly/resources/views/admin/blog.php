@@ -25,7 +25,15 @@
       <?php else: foreach ($posts as $p): ?>
         <tr class="hover:bg-black/[0.02] transition">
           <td class="p-3 font-medium"><?= e($p['title']) ?></td>
-          <td class="p-3"><span class="pill text-[10px] <?= $p['is_published'] ? 'bg-[#E8F8EE] text-[#34C759]' : 'bg-black/5 text-black/40' ?>"><?= $p['is_published'] ? 'Published' : 'Draft' ?></span></td>
+          <td class="p-3">
+            <form method="POST" action="/admin/blog" class="inline" onsubmit="return confirm('Toggle published?')">
+              <?= csrf_field() ?>
+              <input type="hidden" name="action" value="update">
+              <input type="hidden" name="id" value="<?= (int)$p['id'] ?>">
+              <input type="hidden" name="is_published" value="<?= $p['is_published'] ? '0' : '1' ?>">
+              <button class="pill text-[10px] <?= $p['is_published'] ? 'bg-[#E8F8EE] text-[#34C759]' : 'bg-black/5 text-black/40' ?>"><?= $p['is_published'] ? 'Published' : 'Draft' ?></button>
+            </form>
+          </td>
           <td class="p-3 text-black/50"><?= date('M j, Y', strtotime($p['created_at'])) ?></td>
           <td class="p-3 text-right">
             <form method="POST" action="/admin/blog" class="inline" onsubmit="return confirm('Delete this article?')">

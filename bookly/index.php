@@ -62,7 +62,7 @@
     if (str_starts_with($uri, '/install'))  return Bookly\Controllers\InstallerController::handle($uri, $method, $db);
     if (str_starts_with($uri, '/api/'))     return Bookly\Controllers\ApiController::handle($uri, $method, $db, $addons);
     if (str_starts_with($uri, '/book/'))    return Bookly\Controllers\PublicBookingController::handle($uri, $method, $db);
-    if (str_starts_with($uri, '/explore') || str_starts_with($uri, '/category') || str_starts_with($uri, '/city') || str_starts_with($uri, '/business') || $uri === '/search') return Bookly\Controllers\MarketplaceController::handle($uri, $method, $db);
+    if (str_starts_with($uri, '/explore') || str_starts_with($uri, '/category') || str_starts_with($uri, '/city') || str_starts_with($uri, '/business') || str_starts_with($uri, '/blog') || $uri === '/search') return Bookly\Controllers\MarketplaceController::handle($uri, $method, $db);
 
     if (in_array($uri, ['/login', '/logout'], true)) {
         return Bookly\Controllers\AuthController::handle($uri, $method, $db, $user);
