@@ -266,6 +266,14 @@ textarea.dm-inp { min-height: 88px; resize: vertical; }
   var state = { service: null, serviceName: '', date: root.querySelector('#dmDate').value, time: null };
   var biz = <?= json_encode($business['slug']) ?>;
   var isMobile = window.matchMedia('(max-width: 767px)').matches;
+  var LBL_NEXT = <?= json_encode(t('book.next')) ?>;
+  var LBL_BACK = <?= json_encode(t('book.back')) ?>;
+  var LBL_CONFIRM = <?= json_encode(t('book.confirm')) ?>;
+  var LBL_MORNING = <?= json_encode(t('book.morning')) ?>;
+  var LBL_AFTERNOON = <?= json_encode(t('book.afternoon')) ?>;
+  var LBL_EVENING = <?= json_encode(t('book.evening')) ?>;
+  var LBL_NO_SLOTS = <?= json_encode(t('book.no_slots')) ?>;
+  var LBL_ERR_SLOTS = <?= json_encode(t('book.error_slots')) ?>;
 
   function $(s, ctx) { return (ctx || root).querySelector(s); }
   function $$(s, ctx) { return Array.prototype.slice.call((ctx || root).querySelectorAll(s)); }
@@ -310,11 +318,30 @@ textarea.dm-inp { min-height: 88px; resize: vertical; }
     var sticky = $('#dmSticky', root);
     var back = $('#dmStickyBack', root);
     var next = $('#dmStickyNext', root);
-    if (!sticky) return;
-    if (step === 1) { back.style.display = 'none'; next.style.flex = '1'; next.textContent = '<?= t('book.next') ?> →'; next.disabled = !state.service; next.onclick = function() { if (state.service) go(2); }; }
-    else if (step === 2) { back.style.display = 'inline-flex'; next.style.flex = '1'; next.textContent = '<?= t('book.next') ?> →'; next.disabled = false; next.onclick = function() { state.date = $('#dmDate', root).value; go(3); }; }
-    else if (step === 3) { back.style.display = 'inline-flex'; next.style.display = 'none'; }
-    else if (step === 4) { back.style.display = 'inline-flex'; next.style.display = 'inline-flex'; next.style.flex = '1'; next.textContent = '<?= t('book.confirm') ?> ✓'; next.disabled = false; next.onclick = function() { syncForm(); $('#dmForm', root).submit(); }; }
+    if (!sticky || !back || !next) return;
+    // Always reset both buttons to a known default
+    back.style.display = 'none';
+    next.style.display = 'inline-flex';
+    next.style.flex = '1';
+    next.disabled = false;
+    next.onclick = null;
+    if (step === 1) {
+      next.innerHTML = LBL_NEXT + ' <svg width="16" height="16" viewBox="0 0 16 16" fill="none" style="display:inline-block;vertical-align:middle"><path d="M6 4l4 4-4 4" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>';
+      next.disabled = !state.service;
+      next.onclick = function() { if (state.service) go(2); };
+    } else if (step === 2) {
+      back.style.display = 'inline-flex';
+      next.innerHTML = LBL_NEXT + ' <svg width="16" height="16" viewBox="0 0 16 16" fill="none" style="display:inline-block;vertical-align:middle"><path d="M6 4l4 4-4 4" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>';
+      next.onclick = function() { state.date = $('#dmDate', root).value; go(3); };
+    } else if (step === 3) {
+      back.style.display = 'inline-flex';
+      // No next button — slot tap auto-advances
+      next.style.display = 'none';
+    } else if (step === 4) {
+      back.style.display = 'inline-flex';
+      next.innerHTML = LBL_CONFIRM + ' <svg width="16" height="16" viewBox="0 0 16 16" fill="none" style="display:inline-block;vertical-align:middle"><path d="M3 8l3 3 7-7" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>';
+      next.onclick = function() { syncForm(); var f = $('#dmForm', root); if (f) f.submit(); };
+    }
   }
 
   function loadSlots() {
@@ -357,7 +384,7 @@ textarea.dm-inp { min-height: 88px; resize: vertical; }
   }
 
   function renderSlots(arr) {
-    return arr.map(function(t) { return '<button type="button" class="dm-slot" data-time="' + t + '">' + t + '</button>'; }).join('');
+    return arr.map(function(t) { return '<button type="button" class="dm-slot' + (t === state.time ? ' sel' : '') + '" data-time="' + t + '">' + t + '</button>'; }).join('');
   }
 
   function bindSlots() {
