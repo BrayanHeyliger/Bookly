@@ -35,6 +35,8 @@
 
     require BOOKLY_ROOT.'/app/helpers.php';
 
+    Bookly\Support\Language::init();
+
     $db = Bookly\Support\DB::instance();
     $addons = Bookly\Support\AddonManager::instance($db);
     $user = Bookly\Models\User::current($db);
@@ -42,6 +44,13 @@
 
     $uri = parse_url($_SERVER['REQUEST_URI'] ?? '/', PHP_URL_PATH) ?: '/';
     $method = $_SERVER['REQUEST_METHOD'] ?? 'GET';
+
+    if (preg_match('#^/lang/([a-z]{2})$#', $uri, $m)) {
+        Bookly\Support\Language::set($m[1]);
+        $back = $_SERVER['HTTP_REFERER'] ?? '/';
+        if (! str_starts_with($back, '/')) $back = '/';
+        header('Location: ' . $back); exit;
+    }
 
     if (! $installed && ! str_starts_with($uri, '/install')) {
         header('Location: /install'); exit;

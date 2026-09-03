@@ -86,3 +86,14 @@ if (! function_exists('flash')) {
 if (! function_exists('asset')) {
     function asset(string $path): string { return '/assets/'.ltrim($path, '/'); }
 }
+if (! function_exists('t')) {
+    function t(string $key, array $params = []): string {
+        return \Bookly\Support\Language::t($key, $params);
+    }
+}
+if (! function_exists('lang')) {
+    function lang(?string $key = null) {
+        $l = \Bookly\Support\Language::current();
+        return $key ? \Bookly\Support\Language::info($key) : $l;
+    }
+}

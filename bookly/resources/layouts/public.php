@@ -2,7 +2,7 @@
 $__use_data = $__data;
 $__view = isset($__data['_view']) ? str_replace('.', '/', $__data['_view']) : '';
 ?><!DOCTYPE html>
-<html lang="en" class="bg-[#F5F5F7]">
+<html lang="<?= e(\Bookly\Support\Language::current()) ?>" dir="<?= e(\Bookly\Support\Language::dir()) ?>" class="bg-[#F5F5F7]">
 <head>
 <meta charset="UTF-8">
 <title><?= e($__data['title'] ?? 'Bookly') ?></title>
