@@ -164,4 +164,9 @@ return array (
   'lang.choose' => 'Sprache',
   'lang.detected' => 'Erkannt: :country',
   'common.min' => 'Min',
+  'book.morning' => 'Vormittag',
+  'book.afternoon' => 'Nachmittag',
+  'book.evening' => 'Abend',
+  'book.no_slots' => 'Keine Zeiten verfügbar. Versuchen Sie ein anderes Datum.',
+  'book.error_slots' => 'Zeiten konnten nicht geladen werden. Bitte erneut versuchen.',
 );

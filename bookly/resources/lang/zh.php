@@ -164,4 +164,9 @@ return array (
   'lang.choose' => '语言',
   'lang.detected' => '已识别：:country',
   'common.min' => '分钟',
+  'book.morning' => '上午',
+  'book.afternoon' => '下午',
+  'book.evening' => '晚上',
+  'book.no_slots' => '暂无可预约时段。请选择其他日期。',
+  'book.error_slots' => '无法加载时段。请重试。',
 );

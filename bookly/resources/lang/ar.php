@@ -164,4 +164,9 @@ return array (
   'lang.choose' => 'اللغة',
   'lang.detected' => 'تم اكتشاف: :country',
   'common.min' => 'دقيقة',
+  'book.morning' => 'صباحًا',
+  'book.afternoon' => 'بعد الظهر',
+  'book.evening' => 'مساءً',
+  'book.no_slots' => 'لا توجد مواعيد متاحة. جرّب تاريخًا آخر.',
+  'book.error_slots' => 'تعذّر تحميل المواعيد. حاول مرة أخرى.',
 );
