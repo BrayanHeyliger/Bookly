@@ -59,9 +59,16 @@
     }
 
     if (! $installed) { header('Location: /install'); exit; }
-    if (! $user && ! in_array($uri, ['/'], true)) {
-        header('Location: /login'); exit;
+
+    // Public marketing landing — show to anonymous visitors, redirect logged-in users to dashboard
+    if ($uri === '/' || $uri === '/features' || $uri === '/pricing' || $uri === '/addons') {
+        if ($user) { header('Location: /dashboard'); exit; }
+        $landingFile = BOOKLY_ROOT.'/resources/views/marketing/landing.php';
+        if (is_file($landingFile)) require $landingFile;
+        exit;
     }
+
+    if (! $user) { header('Location: /login'); exit; }
 
     return Bookly\Controllers\AppController::handle($uri, $method, $db, $user, $addons);
 })();
