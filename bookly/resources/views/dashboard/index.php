@@ -7,7 +7,7 @@
 <div class="grid grid-cols-1 lg:grid-cols-3 gap-4 mt-6">
 <div class="apple-card p-6 lg:col-span-2">
 <div class="flex items-center justify-between mb-4"><div><div class="text-sm text-black/50">Last 14 days</div><div class="text-lg font-semibold">Bookings & revenue</div></div></div>
-<canvas id="chart" height="100"></canvas>
+<div style="position: relative; height: 260px;"><canvas id="chart"></canvas></div>
 </div>
 <div class="apple-card p-6">
 <div class="text-sm text-black/50">Today</div><div class="text-lg font-semibold mb-4">Upcoming</div>
