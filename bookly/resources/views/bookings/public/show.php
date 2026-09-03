@@ -7,8 +7,23 @@
 <h1 class="text-3xl font-semibold tracking-tight"><?= e($business['name']) ?></h1>
 <p class="text-black/50 mt-1"><?= e($business['description'] ?? '') ?></p>
 </div>
-<div class="h-1 bg-black/5 rounded-full overflow-hidden mb-6">
-<div class="h-full bg-gradient-to-r from-[#0071E3] to-[#5AC8FA] transition-all duration-500" :style="`width: ${(step/4)*100}%`"></div>
+<div class="mb-8">
+<div class="flex items-center justify-between mb-2">
+<template x-for="(label, i) in ['<?= t('book.step1.title') ?>','<?= t('book.step2.title') ?>','<?= t('book.step3.title') ?>','<?= t('book.step4.title') ?>']" :key="i">
+<div class="flex-1 flex flex-col items-center" :class="step >= i+1 ? 'text-[#0071E3]' : 'text-black/40'">
+<div class="w-8 h-8 rounded-full grid place-items-center text-xs font-semibold transition-all duration-300"
+     :class="step > i+1 ? 'bg-[#0071E3] text-white' : (step === i+1 ? 'bg-[#0071E3] text-white ring-4 ring-[#E8F3FF]' : 'bg-black/5 text-black/40')">
+<span x-show="step <= i+1" x-text="i+1"></span>
+<svg x-show="step > i+1" width="14" height="14" viewBox="0 0 14 14" fill="none" style="display:none"><path d="M3 7l3 3 5-6" stroke="white" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>
+</div>
+<div class="text-[10px] mt-1.5 font-medium hidden sm:block" x-text="label"></div>
+</div>
+</template>
+</div>
+<div class="relative h-1 bg-black/5 rounded-full overflow-hidden">
+<div class="absolute inset-y-0 left-0 bg-gradient-to-r from-[#0071E3] to-[#5AC8FA] transition-all duration-500 rounded-full"
+     :style="`width: ${Math.min(100, ((step - 1) / 3) * 100)}%`"></div>
+</div>
 </div>
 <div class="apple-card p-8">
 <div x-show="step === 1" x-transition>
