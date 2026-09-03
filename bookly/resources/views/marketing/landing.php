@@ -48,6 +48,7 @@ body { font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'SF Pro Display'
 <span class="text-base font-semibold tracking-tight text-[#1D1D1F]">Bookly</span>
 </a>
 <div class="hidden md:flex items-center gap-7 text-sm font-medium text-[#1D1D1F]">
+<a href="#memberships" class="hover:text-[#0071E3] transition flex items-center gap-1.5">Memberships <span class="pill bg-[#FF9500] text-white text-[10px] py-0.5 px-1.5">New</span></a>
 <a href="#features" class="hover:text-[#0071E3] transition">Features</a>
 <a href="#addons" class="hover:text-[#0071E3] transition">Addons</a>
 <a href="#pricing" class="hover:text-[#0071E3] transition">Pricing</a>
@@ -66,14 +67,14 @@ body { font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'SF Pro Display'
 <div class="glow" style="bottom: -200px; right: -200px; background: #AF52DE;"></div>
 <div class="max-w-5xl mx-auto text-center relative">
 <div class="pill bg-white/60 backdrop-blur border border-black/5 text-[#0071E3] mb-6 slide-up">
-<span>✨</span> New: AI Assistant & Multi-location addons
+<span>💎</span> New: Sell recurring memberships — get paid even when chairs are empty
 </div>
 <h1 class="gradient-hero-text slide-up text-[#1D1D1F]" style="animation-delay: .1s">
-The booking platform<br>
-<span class="gradient-text">built for service pros.</span>
+Turn one-time clients into<br>
+<span class="gradient-text">monthly members.</span>
 </h1>
 <p class="text-xl md:text-2xl text-black/60 mt-6 max-w-2xl mx-auto slide-up" style="animation-delay: .2s">
-Barber shops, salons, spas, tattoo studios. Beautiful design, modular addons, ready in 5 minutes.
+Bookly's all-in-one platform helps barbers, salons, spas and studios grow predictable revenue with memberships, smart reminders and Apple-style design.
 </p>
 <div class="flex flex-col sm:flex-row items-center justify-center gap-3 mt-10 slide-up" style="animation-delay: .3s">
 <a href="/install" class="btn-primary text-base px-7 py-3.5">Get started free →</a>
@@ -112,6 +113,188 @@ Barber shops, salons, spas, tattoo studios. Beautiful design, modular addons, re
 </div>
 </div>
 </header>
+
+<!-- Logos / Social proof -->
+<section class="py-12 px-6 border-y border-black/5 bg-[#F5F5F7]/50">
+<div class="max-w-6xl mx-auto">
+<!-- Memberships (the hero feature for selling) -->
+<section id="memberships" class="section" style="background: linear-gradient(180deg, #FFFFFF 0%, #F5F5F7 100%);">
+<div class="max-w-6xl mx-auto">
+<div class="text-center mb-14">
+<div class="pill bg-gradient-to-r from-[#FF9500] to-[#FF2D55] text-white mb-4"><span>💎</span> Memberships</div>
+<h2 class="text-4xl md:text-5xl font-semibold tracking-tight text-[#1D1D1F]">Predictable revenue, every month.</h2>
+<p class="text-xl text-black/60 mt-4 max-w-2xl mx-auto">Create unlimited membership tiers, charge monthly or weekly, and let clients self-manage from their phone. Built-in dunning, proration and churn analytics.</p>
+</div>
+
+<!-- Membership tiers mockup -->
+<div class="grid grid-cols-1 md:grid-cols-3 gap-5 mb-16">
+<div class="apple-card p-7">
+<div class="flex items-center justify-between">
+<div class="text-xs font-semibold uppercase tracking-wider text-black/50">Bronze</div>
+<div class="pill bg-[#CD7F32]/10 text-[#CD7F32] text-[10px]">$39 /mo</div>
+</div>
+<div class="text-2xl font-semibold mt-3">The Basic</div>
+<p class="text-sm text-black/60 mt-2">For casual clients who drop in once or twice a month.</p>
+<div class="divider my-5"></div>
+<ul class="space-y-2.5 text-sm">
+<li class="flex gap-2"><span class="text-[#34C759]">✓</span> 2 services per month</li>
+<li class="flex gap-2"><span class="text-[#34C759]">✓</span> 10% off all add-ons</li>
+<li class="flex gap-2"><span class="text-[#34C759]">✓</span> Priority booking</li>
+<li class="flex gap-2"><span class="text-[#34C759]">✓</span> Cancel anytime</li>
+</ul>
+</div>
+<div class="apple-card p-7 relative" style="border: 2px solid #FF9500; transform: scale(1.03);">
+<div class="absolute -top-3 left-1/2 -translate-x-1/2 pill gradient-bg text-white text-xs" style="background: linear-gradient(135deg, #FF9500, #FF2D55);">Best seller</div>
+<div class="flex items-center justify-between">
+<div class="text-xs font-semibold uppercase tracking-wider text-[#FF9500]">Gold</div>
+<div class="pill bg-[#FF9500]/10 text-[#FF9500] text-[10px]">$89 /mo</div>
+</div>
+<div class="text-2xl font-semibold mt-3">The Loyal</div>
+<p class="text-sm text-black/60 mt-2">The sweet spot. Most members stay on this plan for 14+ months.</p>
+<div class="divider my-5"></div>
+<ul class="space-y-2.5 text-sm">
+<li class="flex gap-2"><span class="text-[#34C759]">✓</span> 1 included service per week</li>
+<li class="flex gap-2"><span class="text-[#34C759]">✓</span> 20% off all add-ons</li>
+<li class="flex gap-2"><span class="text-[#34C759]">✓</span> Member-only hours</li>
+<li class="flex gap-2"><span class="text-[#34C759]">✓</span> Birthday gift</li>
+<li class="flex gap-2"><span class="text-[#34C759]">✓</span> Free product samples</li>
+</ul>
+</div>
+<div class="apple-card p-7">
+<div class="flex items-center justify-between">
+<div class="text-xs font-semibold uppercase tracking-wider text-black/50">Platinum</div>
+<div class="pill bg-[#5AC8FA]/10 text-[#0071E3] text-[10px]">$189 /mo</div>
+</div>
+<div class="text-2xl font-semibold mt-3">The VIP</div>
+<p class="text-sm text-black/60 mt-2">Unlimited everything. For your top 10% clients who want it all.</p>
+<div class="divider my-5"></div>
+<ul class="space-y-2.5 text-sm">
+<li class="flex gap-2"><span class="text-[#34C759]">✓</span> Unlimited services</li>
+<li class="flex gap-2"><span class="text-[#34C759]">✓</span> 30% off all add-ons</li>
+<li class="flex gap-2"><span class="text-[#34C759]">✓</span> Free products monthly</li>
+<li class="flex gap-2"><span class="text-[#34C759]">✓</span> VIP events & invites</li>
+<li class="flex gap-2"><span class="text-[#34C759]">✓</span> Concierge booking</li>
+</ul>
+</div>
+</div>
+
+<!-- ROI stats -->
+<div class="grid grid-cols-2 md:grid-cols-4 gap-4 mb-14">
+<div class="apple-card p-6 text-center">
+<div class="text-3xl md:text-4xl font-semibold gradient-text">+38%</div>
+<div class="text-xs text-black/50 mt-2 uppercase tracking-wider">Avg. revenue uplift</div>
+</div>
+<div class="apple-card p-6 text-center">
+<div class="text-3xl md:text-4xl font-semibold gradient-text">12 min</div>
+<div class="text-xs text-black/50 mt-2 uppercase tracking-wider">To launch memberships</div>
+</div>
+<div class="apple-card p-6 text-center">
+<div class="text-3xl md:text-4xl font-semibold gradient-text">−47%</div>
+<div class="text-xs text-black/50 mt-2 uppercase tracking-wider">No-show rate</div>
+</div>
+<div class="apple-card p-6 text-center">
+<div class="text-3xl md:text-4xl font-semibold gradient-text">14 mo</div>
+<div class="text-xs text-black/50 mt-2 uppercase tracking-wider">Avg. member lifetime</div>
+</div>
+</div>
+
+<!-- 3-step how it works -->
+<div class="grid grid-cols-1 md:grid-cols-3 gap-5">
+<div class="apple-card p-7 text-center">
+<div class="w-10 h-10 rounded-full gradient-bg grid place-items-center text-white font-semibold mx-auto">1</div>
+<div class="text-lg font-semibold mt-4">Create your tiers</div>
+<p class="text-sm text-black/60 mt-2">Pick a name, price, included services, perks and rules. Drag-and-drop builder, no coding.</p>
+</div>
+<div class="apple-card p-7 text-center">
+<div class="w-10 h-10 rounded-full gradient-bg grid place-items-center text-white font-semibold mx-auto">2</div>
+<div class="text-lg font-semibold mt-4">Sell in-store or online</div>
+<p class="text-sm text-black/60 mt-2">Staff enroll clients at checkout. Clients buy on your public page. Stripe handles billing & dunning.</p>
+</div>
+<div class="apple-card p-7 text-center">
+<div class="w-10 h-10 rounded-full gradient-bg grid place-items-center text-white font-semibold mx-auto">3</div>
+<div class="text-lg font-semibold mt-4">Get paid every month</div>
+<p class="text-sm text-black/60 mt-2">Recurring revenue hits your account automatically. Churn, LTV and retention dashboards included.</p>
+</div>
+</div>
+<div class="text-center mt-10">
+<a href="/install" class="btn-primary text-base px-7 py-3.5">Start selling memberships today →</a>
+<p class="text-xs text-black/40 mt-3">Setup in 12 minutes · No credit card required · 14-day free trial</p>
+</div>
+</div>
+</section>
+
+<div class="divider max-w-4xl mx-auto"></div>
+
+<!-- Testimonials for memberships -->
+<section class="section bg-[#F5F5F7]">
+<div class="max-w-6xl mx-auto">
+<div class="text-center mb-14">
+<div class="pill bg-white text-[#0071E3] mb-4"><span>💬</span> What owners say</div>
+<h2 class="text-4xl md:text-5xl font-semibold tracking-tight">Members pay us while they sleep.</h2>
+<p class="text-xl text-black/60 mt-4 max-w-2xl mx-auto">Real businesses. Real numbers. Real predictable revenue.</p>
+</div>
+<div class="grid grid-cols-1 md:grid-cols-3 gap-5">
+<div class="apple-card p-7">
+<div class="flex items-center gap-1 text-[#FF9500] text-sm">★★★★★</div>
+<p class="text-base text-[#1D1D1F] mt-4 leading-relaxed">"We launched a <strong>$89 Gold membership</strong> on a Saturday. By Monday we had 47 members and <strong>$4,183 in MRR</strong>. Best weekend of the year."</p>
+<div class="flex items-center gap-3 mt-6">
+<div class="w-10 h-10 rounded-full gradient-bg grid place-items-center text-white font-semibold">JR</div>
+<div><div class="text-sm font-semibold">James R.</div><div class="text-xs text-black/50">Owner · Barber Co. NYC</div></div>
+</div>
+</div>
+<div class="apple-card p-7">
+<div class="flex items-center gap-1 text-[#FF9500] text-sm">★★★★★</div>
+<p class="text-base text-[#1D1D1F] mt-4 leading-relaxed">"I used to live in fear of slow weeks. Now my <strong>Platinum members</strong> pay on the 1st no matter what. Revenue is up <strong>62% YoY</strong>."</p>
+<div class="flex items-center gap-3 mt-6">
+<div class="w-10 h-10 rounded-full grid place-items-center text-white font-semibold" style="background: linear-gradient(135deg, #FF9500, #FF2D55);">SM</div>
+<div><div class="text-sm font-semibold">Sofia M.</div><div class="text-xs text-black/50">Founder · Studio Nine LA</div></div>
+</div>
+</div>
+<div class="apple-card p-7">
+<div class="flex items-center gap-1 text-[#FF9500] text-sm">★★★★★</div>
+<p class="text-base text-[#1D1D1F] mt-4 leading-relaxed">"Switched from Booksy and saved <strong>$240/month</strong>. The membership dunning alone paid for Bookly for the year. Members love the app."</p>
+<div class="flex items-center gap-3 mt-6">
+<div class="w-10 h-10 rounded-full grid place-items-center text-white font-semibold" style="background: linear-gradient(135deg, #34C759, #5AC8FA);">AT</div>
+<div><div class="text-sm font-semibold">Aisha T.</div><div class="text-xs text-black/50">Owner · Beauty Bar Chicago</div></div>
+</div>
+</div>
+</div>
+</div>
+</section>
+
+<div class="divider max-w-4xl mx-auto"></div>
+
+<!-- Bookly vs Booksy comparison -->
+<section class="section">
+<div class="max-w-5xl mx-auto">
+<div class="text-center mb-12">
+<div class="pill bg-[#E8F3FF] text-[#0071E3] mb-4"><span>⚖️</span> Bookly vs Booksy</div>
+<h2 class="text-4xl md:text-5xl font-semibold tracking-tight">A modern, fairer alternative.</h2>
+<p class="text-xl text-black/60 mt-4">Same power, better pricing, Apple-style design.</p>
+</div>
+<div class="apple-card overflow-hidden">
+<table class="w-full text-sm">
+<thead class="bg-[#F5F5F7] text-left">
+<tr><th class="p-4 font-semibold">Feature</th><th class="p-4 text-center font-semibold text-[#0071E3]">Bookly</th><th class="p-4 text-center font-semibold text-black/50">Booksy</th></tr>
+</thead>
+<tbody class="divide-y divide-black/5">
+<tr><td class="p-4">Monthly price (Pro)</td><td class="p-4 text-center font-semibold text-[#34C759]">$29</td><td class="p-4 text-center text-black/50">$45+</td></tr>
+<tr><td class="p-4">Apple-style design</td><td class="p-4 text-center text-[#34C759]">✓</td><td class="p-4 text-center text-black/30">—</td></tr>
+<tr><td class="p-4">Unlimited members</td><td class="p-4 text-center text-[#34C759]">✓</td><td class="p-4 text-center text-[#FF9500]">Limited by plan</td></tr>
+<tr><td class="p-4">Membership dunning</td><td class="p-4 text-center text-[#34C759]">Built-in</td><td class="p-4 text-center text-[#FF9500]">$20/mo extra</td></tr>
+<tr><td class="p-4">Public booking page</td><td class="p-4 text-center text-[#34C759]">Free, unlimited</td><td class="p-4 text-center text-[#FF9500]">$25/mo extra</td></tr>
+<tr><td class="p-4">WhatsApp reminders</td><td class="p-4 text-center text-[#34C759]">Included</td><td class="p-4 text-center text-[#FF9500]">$15/mo</td></tr>
+<tr><td class="p-4">Setup time</td><td class="p-4 text-center text-[#34C759]">12 minutes</td><td class="p-4 text-center text-black/50">2–3 hours</td></tr>
+<tr><td class="p-4">14-day free trial</td><td class="p-4 text-center text-[#34C759]">✓</td><td class="p-4 text-center text-[#FF9500]">No</td></tr>
+<tr><td class="p-4">No setup fees, ever</td><td class="p-4 text-center text-[#34C759]">✓</td><td class="p-4 text-center text-[#FF9500]">$99+ setup</td></tr>
+</tbody>
+</table>
+</div>
+<p class="text-center text-sm text-black/50 mt-6">Booksy prices reflect public 2026 published rates. Bookly Pro plan at $29/mo saves you <strong class="text-[#1D1D1F]">$192+/year</strong>.</p>
+</div>
+</section>
+
+<div class="divider max-w-4xl mx-auto"></div>
 
 <!-- Logos / Social proof -->
 <section class="py-12 px-6 border-y border-black/5 bg-[#F5F5F7]/50">
@@ -272,14 +455,18 @@ foreach ($addons as $a): ?>
 </section>
 
 <!-- Final CTA -->
-<section class="section bg-[#1D1D1F] text-white">
-<div class="max-w-3xl mx-auto text-center">
-<h2 class="text-4xl md:text-5xl font-semibold tracking-tight">Ready to grow your business?</h2>
-<p class="text-xl text-white/60 mt-4">Join 12,000+ service businesses already using Bookly. Set up in 5 minutes.</p>
+<section class="section bg-[#1D1D1F] text-white relative overflow-hidden">
+<div class="glow" style="top: -100px; left: 20%; background: #FF9500; opacity: 0.25;"></div>
+<div class="glow" style="bottom: -100px; right: 20%; background: #0071E3; opacity: 0.25;"></div>
+<div class="max-w-3xl mx-auto text-center relative">
+<div class="pill bg-white/10 text-white border border-white/20 mb-6">💎 Limited offer: First 100 get 3 months free</div>
+<h2 class="text-4xl md:text-5xl font-semibold tracking-tight">Start your membership program today.</h2>
+<p class="text-xl text-white/60 mt-4">Set up in 12 minutes. First members on us. Cancel anytime.</p>
 <div class="flex flex-col sm:flex-row items-center justify-center gap-3 mt-8">
-<a href="/install" class="btn-primary text-base px-7 py-3.5">Get started free →</a>
+<a href="/install" class="btn-primary text-base px-7 py-3.5" style="background: #FF9500;">Get started free →</a>
 <a href="/book/studio-demo" class="text-white/80 hover:text-white px-7 py-3.5 text-base">Try the demo →</a>
 </div>
+<p class="text-xs text-white/40 mt-6">No credit card · 14-day trial · Join 12,000+ owners</p>
 </div>
 </section>
 
