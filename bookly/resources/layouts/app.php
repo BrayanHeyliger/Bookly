@@ -45,15 +45,23 @@ body { font-family: 'Inter', system-ui, -apple-system, 'SF Pro Display', sans-se
 <span class="text-lg font-semibold tracking-tight">Bookly</span>
 </a>
 <nav class="mt-4 flex flex-col gap-1">
-<a href="/dashboard" class="nav-link <?= ($_SERVER['REQUEST_URI'] ?? '') === '/dashboard' ? 'active' : '' ?>"><span>📊</span> Dashboard</a>
-<a href="/calendar" class="nav-link <?= str_starts_with($_SERVER['REQUEST_URI'] ?? '', '/calendar') ? 'active' : '' ?>"><span>📅</span> Calendar</a>
-<a href="/bookings" class="nav-link <?= str_starts_with($_SERVER['REQUEST_URI'] ?? '', '/bookings') ? 'active' : '' ?>"><span>📋</span> Bookings</a>
-<a href="/services" class="nav-link <?= ($_SERVER['REQUEST_URI'] ?? '') === '/services' ? 'active' : '' ?>"><span>✂️</span> Services</a>
-<a href="/clients" class="nav-link <?= ($_SERVER['REQUEST_URI'] ?? '') === '/clients' ? 'active' : '' ?>"><span>👥</span> Clients</a>
-<a href="/reviews" class="nav-link <?= ($_SERVER['REQUEST_URI'] ?? '') === '/reviews' ? 'active' : '' ?>"><span>⭐</span> Reviews</a>
-<a href="/reports" class="nav-link <?= ($_SERVER['REQUEST_URI'] ?? '') === '/reports' ? 'active' : '' ?>"><span>📈</span> Reports</a>
-<a href="/addons" class="nav-link <?= str_starts_with($_SERVER['REQUEST_URI'] ?? '', '/addons') ? 'active' : '' ?>"><span>🧩</span> Addons</a>
-<a href="/settings" class="nav-link <?= str_starts_with($_SERVER['REQUEST_URI'] ?? '', '/settings') ? 'active' : '' ?>"><span>⚙️</span> Settings</a>
+  <div class="text-[10px] font-semibold uppercase tracking-widest text-black/30 px-3 mb-1">Main</div>
+  <a href="/dashboard" class="nav-link <?= ($_SERVER['REQUEST_URI'] ?? '') === '/dashboard' ? 'active' : '' ?>"><span>📊</span> Dashboard</a>
+  <a href="/calendar" class="nav-link <?= str_starts_with($_SERVER['REQUEST_URI'] ?? '', '/calendar') ? 'active' : '' ?>"><span>📅</span> Calendar</a>
+  <a href="/bookings" class="nav-link <?= str_starts_with($_SERVER['REQUEST_URI'] ?? '', '/bookings') ? 'active' : '' ?>"><span>📋</span> Bookings</a>
+  <div class="text-[10px] font-semibold uppercase tracking-widest text-black/30 px-3 mb-1 mt-3">Manage</div>
+  <a href="/services" class="nav-link <?= str_starts_with($_SERVER['REQUEST_URI'] ?? '', '/services') ? 'active' : '' ?>"><span>✂️</span> Services</a>
+  <a href="/clients" class="nav-link <?= ($_SERVER['REQUEST_URI'] ?? '') === '/clients' ? 'active' : '' ?>"><span>👥</span> Clients</a>
+  <a href="/staff" class="nav-link <?= ($_SERVER['REQUEST_URI'] ?? '') === '/staff' ? 'active' : '' ?>"><span>👤</span> Staff</a>
+  <a href="/reviews" class="nav-link <?= ($_SERVER['REQUEST_URI'] ?? '') === '/reviews' ? 'active' : '' ?>"><span>⭐</span> Reviews</a>
+  <div class="text-[10px] font-semibold uppercase tracking-widest text-black/30 px-3 mb-1 mt-3">Grow</div>
+  <a href="/reports" class="nav-link <?= ($_SERVER['REQUEST_URI'] ?? '') === '/reports' ? 'active' : '' ?>"><span>📈</span> Reports</a>
+  <a href="/addons" class="nav-link <?= str_starts_with($_SERVER['REQUEST_URI'] ?? '', '/addons') ? 'active' : '' ?>"><span>🧩</span> Addons</a>
+  <a href="/notifications" class="nav-link <?= ($_SERVER['REQUEST_URI'] ?? '') === '/notifications' ? 'active' : '' ?>"><span>🔔</span> Notifications</a>
+  <div class="text-[10px] font-semibold uppercase tracking-widest text-black/30 px-3 mb-1 mt-3">Setup</div>
+  <a href="/hours" class="nav-link <?= ($_SERVER['REQUEST_URI'] ?? '') === '/hours' ? 'active' : '' ?>"><span>🕐</span> Hours</a>
+  <a href="/settings" class="nav-link <?= str_starts_with($_SERVER['REQUEST_URI'] ?? '', '/settings') ? 'active' : '' ?>"><span>⚙️</span> Settings</a>
+  <a href="/profile" class="nav-link <?= ($_SERVER['REQUEST_URI'] ?? '') === '/profile' ? 'active' : '' ?>"><span>👤</span> Profile</a>
 </nav>
 <div class="mt-auto apple-card p-3 text-sm">
 <div class="font-semibold"><?= e($user['name'] ?? 'Guest') ?></div>
