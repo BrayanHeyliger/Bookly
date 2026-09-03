@@ -119,6 +119,37 @@ body { font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'SF Pro Display'
 <!-- Logos / Social proof -->
 <section class="py-12 px-6 border-y border-black/5 bg-[#F5F5F7]/50">
 <div class="max-w-6xl mx-auto">
+</div>
+</section>
+
+<!-- How it works -->
+<section class="section">
+<div class="max-w-5xl mx-auto">
+<div class="text-center mb-14">
+<div class="pill bg-[#E8F3FF] text-[#0071E3] mb-4"><span>🚀</span> How it works</div>
+<h2 class="text-4xl md:text-5xl font-semibold tracking-tight">Book in 3 steps.</h2>
+<p class="text-xl text-black/60 mt-4 max-w-2xl mx-auto">No phone calls. No back-and-forth. Just pick, book, show up.</p>
+</div>
+<div class="grid grid-cols-1 md:grid-cols-3 gap-5">
+<div class="apple-card p-8 text-center">
+<div class="w-14 h-14 rounded-full gradient-bg grid place-items-center text-white text-2xl font-bold mx-auto">1</div>
+<div class="text-xl font-semibold mt-5">Search</div>
+<p class="text-sm text-black/60 mt-2">Find the perfect professional by service, category or city. Filter by rating, price and availability.</p>
+</div>
+<div class="apple-card p-8 text-center">
+<div class="w-14 h-14 rounded-full gradient-bg grid place-items-center text-white text-2xl font-bold mx-auto">2</div>
+<div class="text-xl font-semibold mt-5">Book</div>
+<p class="text-sm text-black/60 mt-2">Pick a service, choose a time and confirm. Get instant email and SMS confirmation. Free to book.</p>
+</div>
+<div class="apple-card p-8 text-center">
+<div class="w-14 h-14 rounded-full gradient-bg grid place-items-center text-white text-2xl font-bold mx-auto">3</div>
+<div class="text-xl font-semibold mt-5">Show up</div>
+<p class="text-sm text-black/60 mt-2">Arrive and get served. Pay in-app or in person. Leave a review and earn loyalty points.</p>
+</div>
+</div>
+</div>
+</section>
+
 <!-- Memberships (the hero feature for selling) -->
 <section id="memberships" class="section" style="background: linear-gradient(180deg, #FFFFFF 0%, #F5F5F7 100%);">
 <div class="max-w-6xl mx-auto">
@@ -453,6 +484,33 @@ foreach ($addons as $a): ?>
 </div>
 </div>
 <p class="text-center text-sm text-black/40 mt-8"><?= t('price.foot') ?></p>
+</div>
+</section>
+
+<!-- App download promo -->
+<section class="section bg-[#1D1D1F] text-white relative overflow-hidden">
+<div class="glow" style="top: -100px; right: 10%; background: #0071E3; opacity: 0.2;"></div>
+<div class="max-w-5xl mx-auto">
+<div class="grid grid-cols-1 lg:grid-cols-2 gap-10 items-center">
+<div>
+<div class="pill bg-white/10 text-white border border-white/20 mb-4">📱 Download the app</div>
+<h2 class="text-4xl md:text-5xl font-semibold tracking-tight">Book on the go.</h2>
+<p class="text-xl text-white/60 mt-4">Get Bookly for iOS and Android. Manage appointments, track loyalty and get reminders — all from your pocket.</p>
+<div class="flex flex-col sm:flex-row gap-3 mt-8">
+<a href="#" class="inline-flex items-center gap-2 px-5 py-3 rounded-2xl bg-white text-[#1D1D1F] font-semibold hover:bg-gray-100 transition">
+<svg width="24" height="24" viewBox="0 0 24 24" fill="currentColor"><path d="M18.71 19.5c-.83 1.24-1.71 2.45-3.05 2.47-1.34.03-1.77-.79-3.29-.79-1.53 0-2 .77-3.27.82-1.31.05-2.3-1.32-3.14-2.56C4.46 16.27 2.94 11.65 4.7 8.26c1.26-2.44 3.47-3.95 5.86-3.98 1.76-.02 3.24 1.14 4.24 1.14 1 0 2.74-1.4 4.58-1.19.68.03 2.58.28 3.8 2.13-.09.06-2.17 1.28-2.15 3.8.03 3.02 2.65 4.03 2.68 4.04-.03.07-.42 1.44-1.4 2.76zM13 3.5c.73-.83 1.21-1.96 1.07-3.11-1.05.05-2.31.7-3.06 1.58-.68.79-1.26 2.05-1.1 3.16 1.19.09 2.36-.63 3.09-1.63z"/></svg>
+<div><div class="text-[10px] leading-tight opacity-70">Download on the</div><div class="text-sm font-semibold leading-tight">App Store</div></div>
+</a>
+<a href="#" class="inline-flex items-center gap-2 px-5 py-3 rounded-2xl bg-white text-[#1D1D1F] font-semibold hover:bg-gray-100 transition">
+<svg width="24" height="24" viewBox="0 0 24 24" fill="currentColor"><path d="M3.609 1.814L13.792 12 3.61 22.186a.996.996 0 01-.61-.92V2.734a1 1 0 01.609-.92zm10.89 10.893l2.302 2.302-10.937 6.333 8.635-8.635zm3.199-3.199l2.302 2.302a1 1 0 010 1.414l-2.302 2.302-2.302-2.302a1 1 0 010-1.414zM15.5 12l-2.302 2.302L19.5 12l-4-2.302z"/></svg>
+<div><div class="text-[10px] leading-tight opacity-70">Get it on</div><div class="text-sm font-semibold leading-tight">Google Play</div></div>
+</a>
+</div>
+</div>
+<div class="hidden lg:flex justify-center">
+<div class="w-64 h-[500px] bg-white rounded-[40px] border-8 border-white shadow-2xl flex items-center justify-center text-6xl">📱</div>
+</div>
+</div>
 </div>
 </section>
 

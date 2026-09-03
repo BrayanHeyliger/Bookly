@@ -85,6 +85,7 @@ CREATE TABLE IF NOT EXISTS addon_subscriptions (id INTEGER PRIMARY KEY, addon_id
 CREATE TABLE IF NOT EXISTS notifications (id INTEGER PRIMARY KEY, user_id INTEGER, business_id INTEGER, booking_id INTEGER, channel TEXT, type TEXT, subject TEXT, content TEXT, status TEXT DEFAULT 'pending', sent_at TEXT, metadata TEXT, created_at TEXT, updated_at TEXT);
 CREATE TABLE IF NOT EXISTS installer_config (key TEXT PRIMARY KEY, value TEXT);
 CREATE TABLE IF NOT EXISTS business_hours (id INTEGER PRIMARY KEY, business_id INTEGER, day TEXT, open TEXT DEFAULT '09:00', close TEXT DEFAULT '18:00', is_closed INTEGER DEFAULT 0, created_at TEXT, updated_at TEXT);
+CREATE TABLE IF NOT EXISTS blog_posts (id INTEGER PRIMARY KEY, title TEXT, slug TEXT UNIQUE, excerpt TEXT, content TEXT, is_published INTEGER DEFAULT 0, created_at TEXT, updated_at TEXT);
 SQL;
         $this->pdo->exec($schema);
     }

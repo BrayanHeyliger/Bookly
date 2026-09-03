@@ -23,6 +23,8 @@ class AppController
         if ($uri === '/staff')                        { self::staff($db, $user, $method); return; }
         if ($uri === '/hours')                        { self::hours($db, $user, $method); return; }
         if ($uri === '/notifications')                { self::notifications($db, $user); return; }
+        if (str_starts_with($uri, '/admin/listings')) { self::listings($db, $user, $uri, $method); return; }
+        if (str_starts_with($uri, '/admin/blog'))     { self::blog($db, $user, $uri, $method); return; }
         http_response_code(404); echo 'Page not found';
     }
 
@@ -368,5 +370,78 @@ class AppController
         $bid = $b['id'] ?? 0;
         $notifications = $db->all("SELECT n.*, b.name AS business_name FROM notifications n LEFT JOIN businesses b ON b.id = n.business_id WHERE n.business_id = ? ORDER BY n.created_at DESC LIMIT 50", [$bid]);
         layout('app', ['_view' => 'notifications.index', 'title' => 'Notifications', 'subtitle' => 'Recent alerts', 'notifications' => $notifications, 'user' => $user]);
+    }
+
+    public static function listings(DB $db, ?array $user, string $uri, string $method): void
+    {
+        $b = self::business($db, $user);
+        $bid = $b['id'] ?? 0;
+        if ($method === 'POST') {
+            if (! hash_equals($_SESSION['csrf'] ?? '', $_POST['_token'] ?? '')) { http_response_code(419); echo 'CSRF'; return; }
+            $action = $_POST['action'] ?? '';
+            if ($action === 'create' || $action === 'update') {
+                $data = [
+                    'name' => trim($_POST['name'] ?? ''),
+                    'category' => trim($_POST['category'] ?? ''),
+                    'city' => trim($_POST['city'] ?? ''),
+                    'email' => trim($_POST['email'] ?? ''),
+                    'phone' => trim($_POST['phone'] ?? ''),
+                    'address' => trim($_POST['address'] ?? ''),
+                    'description' => trim($_POST['description'] ?? ''),
+                    'is_active' => isset($_POST['is_active']) ? 1 : 0,
+                    'is_featured' => isset($_POST['is_featured']) ? 1 : 0,
+                    'updated_at' => date('Y-m-d H:i:s'),
+                ];
+                if ($action === 'create') {
+                    $data['slug'] = strtolower(trim(preg_replace('/[^a-z0-9]+/', '-', $data['name'])));
+                    $data['created_at'] = date('Y-m-d H:i:s');
+                    $db->insert('businesses', $data);
+                    flash('ok', 'Listing created.');
+                } else {
+                    $id = (int)($_POST['id'] ?? 0);
+                    $db->update('businesses', $data, 'id = ?', [$id]);
+                    flash('ok', 'Listing updated.');
+                }
+            } elseif ($action === 'delete' && ! empty($_POST['id'])) {
+                $db->delete('businesses', 'id = ?', [(int)$_POST['id']]);
+                flash('ok', 'Listing removed.');
+            }
+            redirect('/admin/listings');
+        }
+        $listings = $db->all('SELECT * FROM businesses ORDER BY created_at DESC LIMIT 50');
+        layout('app', ['_view' => 'admin.listings', 'title' => 'Business Listings', 'subtitle' => 'Manage your marketplace', 'listings' => $listings, 'user' => $user]);
+    }
+
+    public static function blog(DB $db, ?array $user, string $uri, string $method): void
+    {
+        if ($method === 'POST') {
+            if (! hash_equals($_SESSION['csrf'] ?? '', $_POST['_token'] ?? '')) { http_response_code(419); echo 'CSRF'; return; }
+            $action = $_POST['action'] ?? '';
+            if ($action === 'create' || $action === 'update') {
+                $data = [
+                    'title' => trim($_POST['title'] ?? ''),
+                    'slug' => strtolower(trim(preg_replace('/[^a-z0-9]+/', '-', trim($_POST['title'] ?? '')))),
+                    'content' => trim($_POST['content'] ?? ''),
+                    'excerpt' => trim($_POST['excerpt'] ?? ''),
+                    'is_published' => isset($_POST['is_published']) ? 1 : 0,
+                    'updated_at' => date('Y-m-d H:i:s'),
+                ];
+                if ($action === 'create') {
+                    $data['created_at'] = date('Y-m-d H:i:s');
+                    $db->insert('blog_posts', $data);
+                    flash('ok', 'Article created.');
+                } else {
+                    $id = (int)($_POST['id'] ?? 0);
+                    $db->update('blog_posts', $data, 'id = ?', [$id]);
+                    flash('ok', 'Article updated.');
+                }
+            } elseif ($action === 'delete' && ! empty($_POST['id'])) {
+                $db->delete('blog_posts', 'id = ?', [(int)$_POST['id']]);
+                flash('ok', 'Article removed.');
+            }
+            redirect('/admin/blog');
+        }
+        $posts = $db->all('SELECT * FROM blog_posts ORDER BY created_at DESC LIMIT 50');
+        layout('app', ['_view' => 'admin.blog', 'title' => 'Blog', 'subtitle' => 'Marketing articles', 'posts' => $posts, 'user' => $user]);
     }
 }

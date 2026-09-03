@@ -58,6 +58,9 @@ body { font-family: 'Inter', system-ui, -apple-system, 'SF Pro Display', sans-se
   <a href="/reports" class="nav-link <?= ($_SERVER['REQUEST_URI'] ?? '') === '/reports' ? 'active' : '' ?>"><span>📈</span> Reports</a>
   <a href="/addons" class="nav-link <?= str_starts_with($_SERVER['REQUEST_URI'] ?? '', '/addons') ? 'active' : '' ?>"><span>🧩</span> Addons</a>
   <a href="/notifications" class="nav-link <?= ($_SERVER['REQUEST_URI'] ?? '') === '/notifications' ? 'active' : '' ?>"><span>🔔</span> Notifications</a>
+  <div class="text-[10px] font-semibold uppercase tracking-widest text-black/30 px-3 mb-1 mt-3">Marketplace</div>
+  <a href="/admin/listings" class="nav-link <?= str_starts_with($_SERVER['REQUEST_URI'] ?? '', '/admin/listings') ? 'active' : '' ?>"><span>🏢</span> Listings</a>
+  <a href="/admin/blog" class="nav-link <?= str_starts_with($_SERVER['REQUEST_URI'] ?? '', '/admin/blog') ? 'active' : '' ?>"><span>📝</span> Blog</a>
   <div class="text-[10px] font-semibold uppercase tracking-widest text-black/30 px-3 mb-1 mt-3">Setup</div>
   <a href="/hours" class="nav-link <?= ($_SERVER['REQUEST_URI'] ?? '') === '/hours' ? 'active' : '' ?>"><span>🕐</span> Hours</a>
   <a href="/settings" class="nav-link <?= str_starts_with($_SERVER['REQUEST_URI'] ?? '', '/settings') ? 'active' : '' ?>"><span>⚙️</span> Settings</a>
