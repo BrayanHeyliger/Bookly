@@ -1,0 +1,14 @@
+services:
+  - type: web
+    name: bookly
+    runtime: php
+    plan: free
+    buildCommand: echo "No build step"
+    startCommand: php -S 0.0.0.0:$PORT -t public
+    envVars:
+      - key: APP_ENV
+        value: production
+    disk:
+      name: bookly-data
+      mountPath: /opt/render/project/src/storage
+      sizeGB: 1
