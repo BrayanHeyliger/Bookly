@@ -6,7 +6,9 @@
  * Refuses to serve anything under storage/, then delegates to the application.
  */
 
-define('BOOKLY_ROOT_PATH', __DIR__);
+if (! defined('BOOKLY_ROOT_PATH')) {
+    define('BOOKLY_ROOT_PATH', __DIR__);
+}
 
 $path = parse_url($_SERVER['REQUEST_URI'] ?? '/', PHP_URL_PATH) ?: '/';
 
@@ -18,4 +20,4 @@ if (preg_match('#^/storage/#', $path)) {
     exit;
 }
 
-require __DIR__.'/index.php';
+require dirname(__DIR__).'/index.php';
