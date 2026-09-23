@@ -1,10 +1,6 @@
 <?php
-
 /**
- * Bookly — vendor-free autoload bootstrap shared by artisan.php.
- *
- * Defines BOOKLY_ROOT (the directory holding app/, config/ and resources/)
- * and registers the `Bookly\` namespace autoloader.
+ * Bookly shared bootstrap: defines BOOKLY_ROOT and registers the Bookly autoloader.
  */
 
 if (! defined('BOOKLY_ROOT')) {

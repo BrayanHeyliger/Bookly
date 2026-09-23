@@ -11,10 +11,9 @@
 <?php endif; ?>
 <form method="POST" action="/login" class="space-y-4">
 <?= csrf_field() ?>
-<div><label class="block text-sm font-medium mb-1.5">Email</label><input class="input" name="email" type="email" required autofocus value="admin@bookly.app"></div>
-<div><label class="block text-sm font-medium mb-1.5">Password</label><input class="input" name="password" type="password" required value="password"></div>
-<label class="flex items-center gap-2 text-sm text-black/60"><input type="checkbox" name="remember" class="rounded"> Remember me</label>
+<div><label class="block text-sm font-medium mb-1.5">Email</label><input class="input" name="email" type="email" required autofocus autocomplete="username"></div>
+<div><label class="block text-sm font-medium mb-1.5">Password</label><input class="input" name="password" type="password" required autocomplete="current-password"></div>
 <button type="submit" class="btn-primary">Sign in</button>
 </form>
-<div class="mt-6 text-xs text-black/40 text-center">Default: admin@bookly.app / password</div>
+<div class="mt-6 text-xs text-black/40 text-center">Use the administrator account you created during installation.</div>
 </div>
