@@ -1,7 +1,7 @@
 # Bookly — Apache config for shared hosts (or any Apache docroot pointing here).
 #
 # Render uses the Dockerfile instead; this is for hosts where you upload files
-# over FTP and the document root cannot be changed.
+# over FTP / a file manager and the document root cannot be changed.
 
 <IfModule mod_rewrite.c>
     RewriteEngine On
