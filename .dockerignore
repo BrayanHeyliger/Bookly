@@ -1,0 +1,6 @@
+/bookly/storage/bookly.sqlite
+/bookly/storage/bookly.sqlite-wal
+/bookly/storage/bookly.sqlite-shm
+/bookly/storage/installed.lock
+/bookly/storage/ratelimit/*
+/bookly/storage/cache/*

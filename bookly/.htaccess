@@ -1,0 +1,26 @@
+# Bookly — Apache config for shared hosts (or any Apache docroot pointing here).
+#
+# Render uses the Dockerfile instead; this is for hosts where you upload files
+# over FTP and the document root cannot be changed.
+
+<IfModule mod_rewrite.c>
+    RewriteEngine On
+
+    # Never serve the SQLite database or the install lock over HTTP.
+    RewriteRule ^storage/ - [F,L]
+
+    # Serve real files and directories as-is.
+    RewriteCond %{REQUEST_FILENAME} -f [OR]
+    RewriteCond %{REQUEST_FILENAME} -d
+    RewriteRule ^ - [L]
+
+    # Everything else goes through the front controller.
+    RewriteRule ^ index.php [L]
+</IfModule>
+
+# Belt and braces for hosts where mod_rewrite is off.
+<FilesMatch "\.(sqlite|sqlite-wal|sqlite-shm|lock)$">
+    Require all denied
+</FilesMatch>
+
+DirectoryIndex index.php index.html
