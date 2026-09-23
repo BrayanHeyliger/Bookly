@@ -1,10 +1,13 @@
 # Bookly — Docker image so Render can run PHP (it has no native PHP runtime).
 #
-# Build locally:
+# Build locally from the repository root:
 #   docker build -t bookly .
 #   docker run -p 8000:8000 -e PORT=8000 bookly
 #
 # On Render this is selected by render.yaml (runtime: docker).
+#
+# PATHS: this file assumes the build context is the REPOSITORY ROOT, which is
+# what render.yaml declares (dockerContext: ./). The app itself lives in bookly/.
 
 FROM php:8.3-cli
 
@@ -27,12 +30,18 @@ RUN apt-get update \
 
 WORKDIR /app
 
-# The whole repository; the app itself lives in bookly/.
+# Copy the build context (repository root: contains bookly/ and public/).
 COPY . /app
 
-# storage/ must stay writable for the SQLite database and rate-limiter buckets.
-RUN mkdir -p /app/bookly/storage/ratelimit /app/bookly/storage/cache \
- && chmod -R 775 /app/bookly/storage
+# Resolve the app root whichever way the context landed:
+#   root context     -> /app/bookly
+#   bookly/ context  -> /app
+RUN APP=/app; \
+    if [ -d /app/bookly ]; then APP=/app/bookly; fi; \
+    mkdir -p "$APP/storage/ratelimit" "$APP/storage/cache"; \
+    chmod -R 775 "$APP/storage"; \
+    echo "$APP" > /app/.approot; \
+    echo "Resolved app root: $APP"
 
 # Fail loudly at build time if an extension the installer checks for is
 # missing, rather than discovering it at runtime behind the requirements screen.
@@ -43,4 +52,4 @@ RUN php -m | grep -qx mbstring   || (echo "MISSING: mbstring" && exit 1)
 EXPOSE 8000
 
 # Render injects $PORT; fall back to 8000 for local docker runs.
-CMD ["sh", "-c", "php -S 0.0.0.0:${PORT:-8000} -t /app/bookly/public /app/public/router.php"]
+CMD ["sh", "-c", "APP=$(cat /app/.approot); DOC=\"$APP/public\"; [ -d \"$DOC\" ] || DOC=\"$APP\"; echo \"Serving $DOC\"; php -S 0.0.0.0:${PORT:-8000} -t \"$DOC\" \"$APP/public/router.php\""]
