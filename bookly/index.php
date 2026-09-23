@@ -23,6 +23,29 @@
     })();
     define('BOOKLY_ROOT', $root);
 
+    $isProduction = getenv('APP_ENV') === 'production';
+
+    // Never leak stack traces or warnings to the browser in production; log them instead.
+    if ($isProduction) {
+        ini_set('display_errors', '0');
+        ini_set('display_startup_errors', '0');
+        ini_set('log_errors', '1');
+        error_reporting(E_ALL);
+        ini_set('session.cookie_httponly', '1');
+        ini_set('session.cookie_secure', '1');
+        ini_set('session.cookie_samesite', 'Lax');
+        ini_set('session.use_strict_mode', '1');
+    } else {
+        ini_set('display_errors', '1');
+        error_reporting(E_ALL);
+    }
+
+    if ($isProduction && ! headers_sent()) {
+        header('X-Content-Type-Options: nosniff');
+        header('X-Frame-Options: SAMEORIGIN');
+        header('Referrer-Policy: strict-origin-when-cross-origin');
+    }
+
     spl_autoload_register(function ($class) {
         if (str_starts_with($class, 'Bookly\\')) {
             $rel = str_replace('\\', '/', substr($class, 7));
@@ -47,9 +70,7 @@
 
     if (preg_match('#^/lang/([a-z]{2})$#', $uri, $m)) {
         Bookly\Support\Language::set($m[1]);
-        $back = $_SERVER['HTTP_REFERER'] ?? '/';
-        if (! str_starts_with($back, '/')) $back = '/';
-        header('Location: ' . $back); exit;
+        redirect(safe_return_path($_SERVER['HTTP_REFERER'] ?? null));
     }
 
     if (! $installed && ! str_starts_with($uri, '/install')) {

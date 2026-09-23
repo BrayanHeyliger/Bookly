@@ -20,6 +20,12 @@ class AddonManager
         return self::$instance ??= new self($db);
     }
 
+    /** Does the slug exist in config/addons.php? */
+    public function exists(string $slug): bool
+    {
+        return isset($this->catalog[$slug]);
+    }
+
     public function sync(): void
     {
         $now = date('Y-m-d H:i:s');
@@ -70,22 +76,35 @@ class AddonManager
         );
     }
 
-    public function install(string $slug): void
+    /** @return bool false when the slug is not part of the catalog. */
+    public function install(string $slug): bool
     {
+        if (! $this->exists($slug)) return false;
         $this->db->update('addons', ['is_installed' => 1, 'is_active' => 1, 'updated_at' => date('Y-m-d H:i:s')], 'slug = ?', [$slug]);
+        return true;
     }
 
-    public function uninstall(string $slug): void
+    /** @return bool false when the slug is not part of the catalog. */
+    public function uninstall(string $slug): bool
     {
+        if (! $this->exists($slug)) return false;
         $this->db->update('addons', ['is_installed' => 0, 'is_active' => 0, 'updated_at' => date('Y-m-d H:i:s')], 'slug = ?', [$slug]);
+        return true;
     }
 
-    public function toggle(string $slug): void
+    /** @return bool false when the slug is not part of the catalog. */
+    public function toggle(string $slug): bool
     {
         $a = $this->find($slug);
-        if (! $a) return;
-        $installed = $a['is_installed'] ? 1 : 1;
-        $active = $a['is_active'] ? 0 : 1;
-        $this->db->update('addons', ['is_installed' => $installed, 'is_active' => $active, 'updated_at' => date('Y-m-d H:i:s')], 'slug = ?', [$slug]);
+        if (! $a || ! $this->exists($slug)) return false;
+
+        $active = (int)$a['is_active'] ? 0 : 1;
+        $this->db->update('addons', [
+            'is_installed' => 1,
+            'is_active' => $active,
+            'updated_at' => date('Y-m-d H:i:s'),
+        ], 'slug = ?', [$slug]);
+
+        return true;
     }
 }

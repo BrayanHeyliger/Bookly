@@ -6,6 +6,16 @@ use Bookly\Support\DB;
 
 class InstallerController
 {
+    /** Minimum length for the first administrator password. */
+    protected const MIN_PASSWORD_LENGTH = 12;
+
+    /** Passwords that must never survive installation. */
+    protected const WEAK_PASSWORDS = [
+        'password', 'password123', '123456', '12345678', '123456789', '1234567890',
+        'admin', 'admin123', 'administrator', 'qwerty', 'letmein', 'welcome',
+        'bookly', 'changeme', 'secret', 'root', 'test', 'demo', 'abc123',
+    ];
+
     public static function handle(string $uri, string $method, DB $db): void
     {
         if ($uri === '/install' || $uri === '/install/') {
@@ -85,36 +95,96 @@ class InstallerController
             $pdo->query('SELECT 1');
             echo json_encode(['ok' => true, 'message' => 'Connection successful.']);
         } catch (\Throwable $e) {
-            echo json_encode(['ok' => false, 'message' => $e->getMessage()]);
+            // Do not echo driver internals back to the browser.
+            echo json_encode(['ok' => false, 'message' => 'Connection failed.']);
         }
+    }
+
+    /**
+     * Validate the credentials submitted in the last installer step.
+     *
+     * @return array{ok: bool, errors: array<string>, admin: array<string, string>}
+     */
+    public static function validateAdmin(array $input): array
+    {
+        $name = trim((string)($input['name'] ?? ''));
+        $email = strtolower(trim((string)($input['email'] ?? '')));
+        $password = (string)($input['password'] ?? '');
+        $confirm = (string)($input['password_confirmation'] ?? $input['password_confirm'] ?? '');
+        $business = trim((string)($input['business_name'] ?? ''));
+
+        $errors = [];
+
+        if ($name === '') {
+            $errors[] = 'Your name is required.';
+        }
+        if ($email === '' || ! filter_var($email, FILTER_VALIDATE_EMAIL)) {
+            $errors[] = 'A valid email address is required.';
+        }
+        if ($business === '') {
+            $errors[] = 'A business name is required.';
+        }
+        if (mb_strlen($password) < self::MIN_PASSWORD_LENGTH) {
+            $errors[] = 'The password must be at least '.self::MIN_PASSWORD_LENGTH.' characters long.';
+        }
+        if (in_array(strtolower($password), self::WEAK_PASSWORDS, true)) {
+            $errors[] = 'That password is too common. Choose something else.';
+        }
+        if (preg_match('/[a-z]/', $password) !== 1
+            || preg_match('/[A-Z]/', $password) !== 1
+            || preg_match('/[0-9]/', $password) !== 1) {
+            $errors[] = 'The password must mix upper-case, lower-case and numbers.';
+        }
+        $localPart = $email !== '' ? explode('@', $email)[0] : '';
+        if (strlen($localPart) >= 3 && stripos($password, $localPart) !== false) {
+            $errors[] = 'The password must not contain your email address.';
+        }
+        if ($confirm !== '' && ! hash_equals($password, $confirm)) {
+            $errors[] = 'The password confirmation does not match.';
+        }
+
+        return [
+            'ok' => $errors === [],
+            'errors' => $errors,
+            'admin' => [
+                'name' => $name,
+                'email' => $email,
+                'password' => $password,
+                'business_name' => $business !== '' ? $business : 'My Bookly',
+                'country' => trim((string)($input['country'] ?? 'US')) ?: 'US',
+                'timezone' => trim((string)($input['timezone'] ?? 'UTC')) ?: 'UTC',
+            ],
+        ];
     }
 
     public static function finish(DB $db): void
     {
         if ($_SERVER['REQUEST_METHOD'] === 'POST') {
-            try {
-                $admin = [
-                    'name' => $_POST['name'] ?? 'Admin',
-                    'email' => $_POST['email'] ?? 'admin@bookly.app',
-                    'password' => $_POST['password'] ?? 'password',
-                    'business_name' => $_POST['business_name'] ?? 'My Bookly',
-                    'country' => $_POST['country'] ?? 'US',
-                    'timezone' => $_POST['timezone'] ?? 'UTC',
-                ];
+            if (! csrf_check()) {
+                flash('error', 'Invalid CSRF token. Reload the page and try again.');
+                redirect('/install/finish');
+            }
 
-                // Roles
+            $validation = self::validateAdmin($_POST);
+
+            if (! $validation['ok']) {
+                flash('error', implode(' ', $validation['errors']));
+                redirect('/install/finish');
+            }
+
+            $admin = $validation['admin'];
+
+            try {
                 foreach (['superadmin' => 'Super Admin','owner' => 'Owner','manager' => 'Manager','staff' => 'Staff','client' => 'Client'] as $slug => $name) {
                     $db->run('INSERT OR IGNORE INTO roles (name, slug, description, created_at, updated_at) VALUES (?, ?, ?, ?, ?)',
                         [$name, $slug, '', date('Y-m-d H:i:s'), date('Y-m-d H:i:s')]);
                 }
 
-                // Admin user
                 $now = date('Y-m-d H:i:s');
                 $db->run('INSERT OR IGNORE INTO users (name, email, password, country, timezone, email_verified_at, is_active, created_at, updated_at) VALUES (?, ?, ?, ?, ?, ?, 1, ?, ?)',
                     [$admin['name'], $admin['email'], password_hash($admin['password'], PASSWORD_BCRYPT), $admin['country'], $admin['timezone'], $now, $now, $now]);
                 $u = $db->first('SELECT * FROM users WHERE email = ?', [$admin['email']]);
 
-                // Business
                 $slug = strtolower(preg_replace('/[^a-z0-9]+/i', '-', $admin['business_name']));
                 if (! $slug) $slug = 'bookly';
                 $db->run('INSERT INTO businesses (name, slug, email, country, timezone, currency, category, owner_id, is_active, created_at, updated_at) VALUES (?, ?, ?, ?, ?, ?, ?, ?, 1, ?, ?)',
@@ -123,23 +193,22 @@ class InstallerController
                 $db->run('INSERT INTO business_user (business_id, user_id, role_in_business, is_active, created_at, updated_at) VALUES (?, ?, ?, 1, ?, ?)',
                     [$b['id'], $u['id'], 'owner', $now, $now]);
 
-                // Roles
                 $r = $db->first('SELECT id FROM roles WHERE slug = ?', ['superadmin']);
                 $db->run('INSERT OR IGNORE INTO role_user (role_id, user_id) VALUES (?, ?)', [$r['id'], $u['id']]);
 
-                // Demo services
                 $services = [['Haircut',30,35,'Grooming'],['Beard Trim',20,18,'Grooming'],['Hair Color',75,90,'Color'],['Shave & Style',45,50,'Grooming'],['Kids Cut',25,22,'Kids']];
                 foreach ($services as $i => [$name,$dur,$price,$cat]) {
                     $db->run('INSERT INTO services (business_id, name, duration, price, deposit, category, color, position, is_active, created_at, updated_at) VALUES (?,?,?,?,?,?,?,?,1,?,?)',
                         [$b['id'], $name, $dur, $price, 5, $cat, '#0071E3', $i, $now, $now]);
                 }
 
-                // Demo staff
+                // Demo staff — no sign-in credentials: these rows exist only to be
+                // assigned bookings and cannot be logged into (unknowable password).
                 $staff = [['Alex Stone','alex@bookly.app'],['Jamie Lee','jamie@bookly.app'],['Rita Vance','rita@bookly.app']];
                 $staffIds = [];
                 foreach ($staff as [$name, $email]) {
                     $db->run('INSERT OR IGNORE INTO users (name, email, password, email_verified_at, is_active, created_at, updated_at) VALUES (?,?,?,?,1,?,?)',
-                        [$name, $email, password_hash('password', PASSWORD_BCRYPT), $now, $now, $now]);
+                        [$name, $email, password_hash(bin2hex(random_bytes(32)), PASSWORD_BCRYPT), $now, $now, $now]);
                     $su = $db->first('SELECT id FROM users WHERE email = ?', [$email]);
                     $staffIds[] = $su['id'];
                     $rStaff = $db->first('SELECT id FROM roles WHERE slug = ?', ['staff']);
@@ -148,7 +217,6 @@ class InstallerController
                         [$b['id'], $su['id'], 'staff', $now, $now]);
                 }
 
-                // Demo clients + bookings
                 $serviceRows = $db->all('SELECT * FROM services WHERE business_id = ?', [$b['id']]);
                 for ($i = 1; $i <= 8; $i++) {
                     $db->run('INSERT INTO clients (business_id, first_name, last_name, email, phone, is_favorite, total_visits, total_spent, created_at, updated_at) VALUES (?,?,?,?,?,?,?,?,?,?)',
@@ -169,26 +237,27 @@ class InstallerController
                     }
                 }
 
-                // Reviews
                 $completed = $db->all('SELECT * FROM bookings WHERE business_id = ? AND status = ? LIMIT 10', [$b['id'], 'completed']);
                 foreach ($completed as $bk) {
                     $db->run('INSERT OR IGNORE INTO reviews (business_id, booking_id, rating, comment, is_approved, created_at, updated_at) VALUES (?,?,?,?,1,?,?)',
                         [$b['id'], $bk['id'], rand(4, 5), 'Great experience!', $now, $now]);
                 }
 
-                // Lock
                 @mkdir(BOOKLY_ROOT.'/storage', 0775, true);
                 file_put_contents(BOOKLY_ROOT.'/storage/installed.lock', date('c'));
 
-                // Auto-login admin
+                if (session_status() !== PHP_SESSION_ACTIVE) session_start();
+                session_regenerate_id(true);
                 $_SESSION['user_id'] = $u['id'];
                 redirect('/dashboard');
             } catch (\Throwable $e) {
-                flash('error', 'Install failed: '.$e->getMessage());
-                redirect('/install/admin');
+                // Log the detail, show the user nothing that leaks internals.
+                error_log('[Bookly] install failed: '.$e->getMessage());
+                flash('error', 'Install failed. Check the server log for details.');
+                redirect('/install/finish');
             }
             return;
         }
-        self::render('finish', ['__current_step' => 4]);
+        self::render('finish', ['__current_step' => 4, 'error' => flash('error')]);
     }
 }
